@@ -17,6 +17,7 @@ export const DEFAULT_WORKFLOW = "coreWorkflow";
 // ie: {template: "products"}
 export const INDEX_OPTIONS = {
   template: "mainApp",
+  layoutFooter: "Footer",
   workflow: "coreProductGridWorkflow"
 };
 
