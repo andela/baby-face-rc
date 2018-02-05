@@ -90,6 +90,55 @@ class SearchModal extends Component {
     );
   }
 
+  renderSortSelect() {
+    return (
+      <div className="rui search-modal-sort-filter-container">
+        <div className="row">
+          <div className="col-md-4 col-xs-12 select-field">
+            <div>
+              <label>Category:</label>
+            </div>
+            <div className="rui select" >
+              <select className="category-filter" >
+                <option value="newest">All Category</option>
+              </select>
+            </div>
+          </div>
+          <div className="col-md-4 col-xs-12 select-field" >
+            <div>
+              <label>Price:</label>
+            </div>
+            <div className="rui select" >
+              <select className="price-filter" >
+                <option value="all">All Prices</option>
+                <option value="0-4999.99">0 - 4999.99</option>
+                <option value="5000-9999.99">5000 - 9999.99</option>
+                <option value="10000-19999.99">10000 - 19999.99</option>
+                <option value="20000-49999.99">20000 - 49999.99</option>
+                <option value="50000-79999.99">50000 - 79999.99</option>
+                <option value="80000-99999.99">80000 - 99999.99</option>
+                <option value="100000-above">100000 and Above</option>
+              </select>
+            </div>
+          </div>
+          <div className="col-md-4 col-xs-12 select-field">
+            <div>
+              <label>Sort By:</label>
+            </div>
+            <div className="rui select" >
+              <select className="sort-result" >
+                <option value="newest">Newest</option>
+                <option value="lowest">Price: Low to High</option>
+                <option value="highest">Price: High to Low</option>
+                <option value="rating">Best Rating</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   render() {
     return (
       <div>
@@ -98,10 +147,11 @@ class SearchModal extends Component {
           {this.renderSearchInput()}
           {this.renderSearchTypeToggle()}
           {this.props.tags.length > 0 && this.renderProductSearchTags()}
+          {this.renderSortSelect()}
           {this.props.value.length > 1 && this.props.products.length < 1 &&
-          <h4>
-            <strong>{`No match found for "${this.props.value}", Please try again`}</strong>
-          </h4>}
+            <h4>
+              <strong>{`No match found for "${this.props.value}", Please try again`}</strong>
+            </h4>}
         </div>
         <div className="rui search-modal-results-container">
           {this.props.products.length > 0 &&
