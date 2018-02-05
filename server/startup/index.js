@@ -6,6 +6,7 @@ import Init from "./init";
 import Prerender from "./prerender";
 import { initTemplates } from "/server/api/core/templates";
 
+/* eslint no-undef: 0 */
 
 export default function () {
   Accounts();
@@ -15,4 +16,5 @@ export default function () {
   Registry();
   Init();
   Prerender();
+  JsonRoutes.ErrorMiddleware.use(RestMiddleware.handleErrorAsJson);
 }
