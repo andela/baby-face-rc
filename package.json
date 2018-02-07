@@ -135,7 +135,8 @@
     "jest": "^21.2.1",
     "js-yaml": "^3.9.0",
     "jsdoc": "^3.5.5",
-    "react-addons-test-utils": "15.6.0"
+    "react-addons-test-utils": "15.6.0",
+    "reaction-cli": "^0.26.4"
   },
   "postcss": {
     "plugins": {
