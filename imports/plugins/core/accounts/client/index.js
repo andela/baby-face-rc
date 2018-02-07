@@ -18,6 +18,7 @@ export { default as SignUp } from "./components/signUp";
 export { default as UpdateEmail } from "./containers/updateEmail";
 export { default as UpdatePasswordOverlay } from "./components/updatePasswordOverlay";
 export { default as LoginInline } from "./components/loginInline";
+export { default as StaticPages } from "./components/staticPages";
 
 export { default as AccountsDashboardContainer } from "./containers/accountsDashboardContainer";
 export { default as UserOrdersListContainer } from "./containers/userOrdersListContainer";
@@ -60,3 +61,5 @@ import "./templates/updatePassword/updatePassword.html";
 import "./templates/updatePassword/updatePassword.js";
 import "./templates/verify/verifyAccount.html";
 import "./templates/verify/verifyAccount.js";
+import "./templates/staticPagesNav/staticPagesNav.html";
+import "./templates/staticPagesNav/staticPagesNav.js";
