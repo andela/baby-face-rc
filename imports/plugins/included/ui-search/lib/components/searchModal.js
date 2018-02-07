@@ -11,6 +11,7 @@ class SearchModal extends Component {
     handleAccountClick: PropTypes.func,
     handleChange: PropTypes.func,
     handleClick: PropTypes.func,
+    handleSort: PropTypes.func,
     handleTagClick: PropTypes.func,
     handleToggle: PropTypes.func,
     products: PropTypes.array,
@@ -126,11 +127,15 @@ class SearchModal extends Component {
               <label>Sort By:</label>
             </div>
             <div className="rui select" >
-              <select className="sort-result" >
-                <option value="newest">Newest</option>
+              <select
+                id="sort-result"
+                className="sort-result"
+                onChange={() => this.props.handleSort("sort-result")}
+              >
+                <option value="relevance">Relevance</option>
                 <option value="lowest">Price: Low to High</option>
                 <option value="highest">Price: High to Low</option>
-                <option value="rating">Best Rating</option>
+                <option value="newest">Newest</option>
               </select>
             </div>
           </div>
