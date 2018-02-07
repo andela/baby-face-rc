@@ -95,3 +95,6 @@ johanbrook:publication-collector
 
 # Custom Packages
 teamon:tinymce
+simple:rest
+simple:json-routes
+simple:rest-json-error-handler
