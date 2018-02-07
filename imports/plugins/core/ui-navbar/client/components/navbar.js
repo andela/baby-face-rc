@@ -121,7 +121,7 @@ class NavBar extends Component {
 
   renderTagNav() {
     return (
-      <div className="menu text-white">
+      <div className="menu">
         <Components.TagNav
           isVisible={this.state.navBarVisible}
           closeNavbar={this.handleCloseNavbar}
@@ -134,7 +134,7 @@ class NavBar extends Component {
 
   render() {
     return (
-      <div className="rui navbar text-white">
+      <div className="rui navbar">
         {this.renderHamburgerButton()}
         {this.renderBrand()}
         {this.renderTagNav()}

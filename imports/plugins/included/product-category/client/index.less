@@ -14,7 +14,9 @@ body,
   background-color: #337ab7;
   color: white;
 }
-
+.rui.textfield input {
+  color: black;
+}
 .rui.navbar.active {
   color: #337ab7 !important;
 }
@@ -65,15 +67,16 @@ body,
 //   background-color: transparent !important;
 //   transform: scale(1.2);
 // }
-.rui.navbar .accounts .dropdown-toggle:hover,
-.rui.navbar .search:hover {
-  background-color: transparent !important;
+.rui.navbar .accounts .dropdown-toggle:hover {
+  background-color:  #ef9113 !important;
   border-color: transparent !important;
 }
 
-.rui.navbar .accounts .dropdown-toggle:hover,
+// .rui.navbar .accounts .dropdown-toggle:hover,
 .rui.navbar .languages:hover,
 .rui.navbar .search:hover,
+.rui.navbar .notification-icon:hover,
+// .rui.navbar .accounts:hover,
 .rui.navbar .currencies:hover,
 .rui.tagnav .navbar-item>.rui.tag.link:hover {
   transform: scale(1.2);
@@ -81,6 +84,12 @@ body,
   border-color: transparent !important;
 }
 
+.rui.tagnav.vertical .navbar-items {
+background: #337ab7 !important;
+}
+.rui menu-item {
+  background: #337ab7 !important;
+}
 .mt-11 {
   margin-top: 1rem !important;
 }
@@ -448,7 +457,7 @@ body,
 }
 
 .footer .acount-icon .fa {
-  margin-right: 25px;
+  margin-right: 1rem;
 }
 
 .footer .category a {
