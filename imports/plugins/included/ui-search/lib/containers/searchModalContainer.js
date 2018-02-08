@@ -21,7 +21,8 @@ const wrapComponent = (Comp) => (
         value: localStorage.getItem("searchValue") || "",
         renderChild: true,
         facets: [],
-        sortKey: {}
+        sortKey: {},
+        priceFilter: {}
       };
     }
 
@@ -97,6 +98,17 @@ const wrapComponent = (Comp) => (
       }
     }
 
+    handlePriceFilter = (id) => {
+      const priceFilterValue = document.getElementById(id).value;
+      const priceArray = priceFilterValue.split("-");
+      this.setState(() => ({
+        priceFilter: {
+          minimumValue: priceArray[0],
+          maximumValue: priceArray[1]
+        }
+      }));
+    }
+
     render() {
       return (
         <div>
@@ -109,11 +121,13 @@ const wrapComponent = (Comp) => (
                 handleAccountClick={this.handleAccountClick}
                 handleTagClick={this.handleTagClick}
                 handleSort={this.handleSort}
+                handlePriceFilter={this.handlePriceFilter}
                 value={this.state.value}
                 unmountMe={this.handleChildUnmount}
                 searchCollection={this.state.collection}
                 facets={this.state.facets}
                 sortKey={this.state.sortKey}
+                priceFilter={this.state.priceFilter}
               />
             </div> : null
           }

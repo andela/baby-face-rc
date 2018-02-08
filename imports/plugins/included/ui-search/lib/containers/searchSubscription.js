@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import isEmpty from "lodash/isEmpty";
 import { Meteor } from "meteor/meteor";
 import * as Collections from "/lib/collections";
 import { Components, composeWithTracker } from "@reactioncommerce/reaction-components";
@@ -42,12 +43,30 @@ function composer(props, onData) {
     let productResults = [];
     let tagSearchResults = [];
     let accountResults = [];
+    let filterKey = {};
+
+    if (isEmpty(props.priceFilter) || (props.priceFilter.minimumValue === "all")) {
+      filterKey = {};
+    } else if (props.priceFilter.maximumValue === "above") {
+      filterKey = {
+        "price.max": { $gt: 100000 }
+      };
+    } else {
+      filterKey = {
+        $and: [{
+          "price.min": { $gte: parseInt(props.priceFilter.minimumValue, 10) },
+          "price.max": { $lte: parseInt(props.priceFilter.maximumValue, 10) + 1 }
+        }]
+      };
+    }
 
     /*
     * Product Search
     */
     if (props.searchCollection === "products") {
-      productResults = Collections.ProductSearch.find({}, { sort: props.sortKey }).fetch();
+      productResults = Collections.ProductSearch.find(filterKey, {
+        sort: props.sortKey
+      }).fetch();
 
       const productHashtags = getProductHashtags(productResults);
       tagSearchResults = Collections.Tags.find({

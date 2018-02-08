@@ -11,6 +11,7 @@ class SearchModal extends Component {
     handleAccountClick: PropTypes.func,
     handleChange: PropTypes.func,
     handleClick: PropTypes.func,
+    handlePriceFilter: PropTypes.func,
     handleSort: PropTypes.func,
     handleTagClick: PropTypes.func,
     handleToggle: PropTypes.func,
@@ -110,7 +111,11 @@ class SearchModal extends Component {
               <label>Price:</label>
             </div>
             <div className="rui select" >
-              <select className="price-filter" >
+              <select
+                id="price-filter"
+                className="price-filter"
+                onChange={() => this.props.handlePriceFilter("price-filter")}
+              >
                 <option value="all">All Prices</option>
                 <option value="0-4999.99">0 - 4999.99</option>
                 <option value="5000-9999.99">5000 - 9999.99</option>
@@ -152,9 +157,11 @@ class SearchModal extends Component {
           {this.renderSearchInput()}
           {this.renderSearchTypeToggle()}
           {this.props.tags.length > 0 && this.renderProductSearchTags()}
+        </div>
+        <div className="container">
           {this.renderSortSelect()}
           {this.props.value.length > 1 && this.props.products.length < 1 &&
-            <h4>
+            <h4 className="search-info">
               <strong>{`No match found for "${this.props.value}", Please try again`}</strong>
             </h4>}
         </div>
