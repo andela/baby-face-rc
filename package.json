@@ -29,7 +29,7 @@
     "babel-preset-stage-2": "^6.24.1",
     "babel-runtime": "^6.23.0",
     "bcrypt": "^1.0.3",
-    "body-parser": "^1.18.2",
+    "body-parser": "^1.17.2",
     "bootstrap": "^3.3.7",
     "braintree": "^2.5.0",
     "bunyan": "^2.0.0",
@@ -39,10 +39,12 @@
     "connect-query": "^1.0.0",
     "connect-route": "^0.1.5",
     "copy-to-clipboard": "^3.0.6",
+    "core-js": "^2.5.3",
     "country-data": "^0.0.31",
     "create-react-class": "^15.6.0",
     "css-annotation": "^0.6.2",
     "deep-diff": "^0.3.8",
+    "deep-equal": "^1.0.1",
     "dnd-core": "^2.4.0",
     "escape-string-regexp": "^1.0.5",
     "faker": "^4.1.0",
@@ -136,7 +138,8 @@
     "jest": "^21.2.1",
     "js-yaml": "^3.9.0",
     "jsdoc": "^3.5.5",
-    "react-addons-test-utils": "15.6.0"
+    "react-addons-test-utils": "15.6.0",
+    "reaction-cli": "^0.26.4"
   },
   "postcss": {
     "plugins": {
