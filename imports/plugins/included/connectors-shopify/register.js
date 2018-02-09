@@ -6,7 +6,8 @@ Reaction.registerPackage({
   icon: "fa fa-exchange",
   autoEnable: true,
   settings: {
-    apiKey: "",
+    secretKey: "",
+    publicKey: "",
     password: "",
     sharedSecret: "",
     shopName: "",
