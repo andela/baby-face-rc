@@ -22,7 +22,9 @@ const wrapComponent = (Comp) => (
         renderChild: true,
         facets: [],
         sortKey: {},
-        priceFilter: {}
+        priceFilter: {},
+        vendorFilter: null,
+        category: "all"
       };
     }
 
@@ -109,6 +111,14 @@ const wrapComponent = (Comp) => (
       }));
     }
 
+    handleVendorFilter = (id) => {
+      const vendorFilter = document.getElementById(id).value;
+      this.setState(() => ({
+        vendorFilter,
+        category: vendorFilter
+      }));
+    }
+
     render() {
       return (
         <div>
@@ -122,12 +132,15 @@ const wrapComponent = (Comp) => (
                 handleTagClick={this.handleTagClick}
                 handleSort={this.handleSort}
                 handlePriceFilter={this.handlePriceFilter}
+                handleVendorFilter={this.handleVendorFilter}
                 value={this.state.value}
                 unmountMe={this.handleChildUnmount}
                 searchCollection={this.state.collection}
                 facets={this.state.facets}
                 sortKey={this.state.sortKey}
                 priceFilter={this.state.priceFilter}
+                vendorFilter={this.state.vendorFilter}
+                category={this.state.category}
               />
             </div> : null
           }

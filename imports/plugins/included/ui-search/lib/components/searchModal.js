@@ -8,6 +8,7 @@ import { accountsTable } from "../helpers";
 class SearchModal extends Component {
   static propTypes = {
     accounts: PropTypes.array,
+    category: PropTypes.string,
     handleAccountClick: PropTypes.func,
     handleChange: PropTypes.func,
     handleClick: PropTypes.func,
@@ -15,6 +16,8 @@ class SearchModal extends Component {
     handleSort: PropTypes.func,
     handleTagClick: PropTypes.func,
     handleToggle: PropTypes.func,
+    handleVendorFilter: PropTypes.func,
+    productVendors: PropTypes.array,
     products: PropTypes.array,
     siteName: PropTypes.string,
     tags: PropTypes.array,
@@ -92,17 +95,25 @@ class SearchModal extends Component {
     );
   }
 
-  renderSortSelect() {
+  renderSortSelect(vendors) {
     return (
       <div className="rui search-modal-sort-filter-container">
         <div className="row">
           <div className="col-md-4 col-xs-12 select-field">
             <div>
-              <label>Category:</label>
+              <label>Vendor:</label>
             </div>
             <div className="rui select" >
-              <select className="category-filter" >
-                <option value="newest">All Category</option>
+              <select
+                id="category-filter"
+                className="category-filter"
+                value={this.props.category}
+                onChange={() => this.props.handleVendorFilter("category-filter")}
+              >
+                <option value="all">All Vendors</option>
+                {vendors && vendors.map((vendor, index) => (
+                  <option key={index.toString()} value={vendor}>{vendor}</option>
+                ))}
               </select>
             </div>
           </div>
@@ -159,7 +170,7 @@ class SearchModal extends Component {
           {this.props.tags.length > 0 && this.renderProductSearchTags()}
         </div>
         <div className="container">
-          {this.renderSortSelect()}
+          {this.renderSortSelect(this.props.productVendors)}
           {this.props.value.length > 1 && this.props.products.length < 1 &&
             <h4 className="search-info">
               <strong>{`No match found for "${this.props.value}", Please try again`}</strong>
