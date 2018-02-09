@@ -46,7 +46,6 @@ Template.paystackPaymentForm.helpers({
 
 AutoForm.addHooks("paystack-payment-form", {
   onSubmit(doc) {
-    console.log('>>>>>>>>>>>>>>Clicking')
     Meteor.call("paystack/loadApiKeys", (err, keys) => {
       if (keys) {
         const {
