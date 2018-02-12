@@ -16,6 +16,8 @@ export const DEFAULT_WORKFLOW = "coreWorkflow";
 // Use this to override just the home Package
 // ie: {template: "products"}
 export const INDEX_OPTIONS = {
+  template: "mainApp",
+  layoutFooter: "Footer",
   workflow: "coreProductGridWorkflow"
 };
 
