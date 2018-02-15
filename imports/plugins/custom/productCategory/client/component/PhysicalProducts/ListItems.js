@@ -1,5 +1,6 @@
 import React from "react";
 import { Router } from "/client/api";
+import PropTypes from "prop-types";
 
 const ListItems = ({ subtitles }) => {
   return (
@@ -23,4 +24,7 @@ const ListItems = ({ subtitles }) => {
   );
 };
 
+ListItems.propTypes = {
+  subtitles: PropTypes.object.isRequired
+};
 export default ListItems;

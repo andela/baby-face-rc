@@ -1,5 +1,6 @@
 import React from "react";
 import { Router } from "/client/api";
+import PropTypes from "prop-types";
 
 const Sidebar = ({ display }) => {
   return (
@@ -23,6 +24,10 @@ const Sidebar = ({ display }) => {
       </div>
     </div>
   );
+};
+
+Sidebar.propTypes = {
+  display: PropTypes.string.isRequired
 };
 
 export default Sidebar;
