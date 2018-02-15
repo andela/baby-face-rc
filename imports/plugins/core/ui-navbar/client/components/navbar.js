@@ -119,6 +119,7 @@ class NavBar extends Component {
     );
   }
 
+
   renderTagNav() {
     return (
       <div className="menu">
@@ -132,6 +133,12 @@ class NavBar extends Component {
     );
   }
 
+  renderStaticPages() {
+    return (
+      <Components.StaticPagesComponent />
+    );
+  }
+
   render() {
     return (
       <div className="rui navbar">
@@ -142,6 +149,7 @@ class NavBar extends Component {
         {this.renderNotificationIcon()}
         {this.renderLanguage()}
         {this.renderCurrency()}
+        {this.renderStaticPages()}
         {this.renderMainDropdown()}
         {this.renderCartContainerAndPanel()}
       </div>

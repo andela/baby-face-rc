@@ -40,8 +40,14 @@ public/custom/*
 private/custom/*
 !private/custom/.gitkeep
 
+<<<<<<< HEAD
 !imports/plugins/custom/.gitkeep
 
 .reaction/config.json
 package-lock.json
 imports/plugins/custom/featuredProduct
+=======
+.reaction/config.json
+
+package-lock.json
+>>>>>>> aab1b9d03aaf2d1597f2cbeafb520a7c11e98942

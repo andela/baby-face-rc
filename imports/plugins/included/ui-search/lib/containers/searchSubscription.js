@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import isEmpty from "lodash/isEmpty";
 import { Meteor } from "meteor/meteor";
 import * as Collections from "/lib/collections";
 import { Components, composeWithTracker } from "@reactioncommerce/reaction-components";
@@ -33,6 +34,17 @@ function getProductHashtags(productResults) {
   }, []);
 }
 
+function getProductsVendor(productResults) {
+  const foundVendors = {};
+  return productResults.reduce((vendors, product) => {
+    if (product.vendor && !foundVendors[product.vendor]) {
+      vendors.push(product.vendor);
+      foundVendors[product.vendor] = true;
+    }
+    return vendors;
+  }, []);
+}
+
 function composer(props, onData) {
   const searchResultsSubscription = Meteor.subscribe("SearchResults", props.searchCollection, props.value, props.facets);
   const shopMembersSubscription = Meteor.subscribe("ShopMembers");
@@ -42,17 +54,52 @@ function composer(props, onData) {
     let productResults = [];
     let tagSearchResults = [];
     let accountResults = [];
+    let filterKey = {};
+    let minimumPriceFilterKey = {};
+    let maximumPriceFilterKey = {};
+    let productVendors = [];
+    let vendorFilterKey = {};
+
+    if (isEmpty(props.priceFilter) || (props.priceFilter.minimumValue === "all")) {
+      minimumPriceFilterKey = {};
+      maximumPriceFilterKey = {};
+    } else if (props.priceFilter.maximumValue === "above") {
+      minimumPriceFilterKey = {
+        "price.max": { $gt: 100000 }
+      };
+    } else {
+      minimumPriceFilterKey = {
+        "price.min": { $gte: parseInt(props.priceFilter.minimumValue, 10) }
+      };
+      maximumPriceFilterKey = {
+        "price.max": { $lte: parseInt(props.priceFilter.maximumValue, 10) + 1 }
+      };
+    }
+
+    if ((props.vendorFilter !== null) && props.vendorFilter !== "all") {
+      vendorFilterKey = {
+        vendor: props.vendorFilter
+      };
+    }
+
+    filterKey = {
+      $and: [minimumPriceFilterKey, maximumPriceFilterKey, vendorFilterKey]
+    };
 
     /*
     * Product Search
     */
     if (props.searchCollection === "products") {
-      productResults = Collections.ProductSearch.find().fetch();
+      productResults = Collections.ProductSearch.find(filterKey, {
+        sort: props.sortKey
+      }).fetch();
 
       const productHashtags = getProductHashtags(productResults);
       tagSearchResults = Collections.Tags.find({
         _id: { $in: productHashtags }
       }).fetch();
+
+      productVendors = getProductsVendor(productResults);
     }
 
     /*
@@ -66,7 +113,8 @@ function composer(props, onData) {
       siteName,
       products: productResults,
       accounts: accountResults,
-      tags: tagSearchResults
+      tags: tagSearchResults,
+      productVendors
     });
   }
 }

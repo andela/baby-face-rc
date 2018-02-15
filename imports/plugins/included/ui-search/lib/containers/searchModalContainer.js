@@ -20,7 +20,11 @@ const wrapComponent = (Comp) => (
         collection: "products",
         value: localStorage.getItem("searchValue") || "",
         renderChild: true,
-        facets: []
+        facets: [],
+        sortKey: {},
+        priceFilter: {},
+        vendorFilter: null,
+        category: "all"
       };
     }
 
@@ -74,6 +78,47 @@ const wrapComponent = (Comp) => (
       this.setState({ renderChild: false });
     }
 
+    handleSort = (id) => {
+      const sortValue = document.getElementById(id).value;
+
+      if (sortValue === "relevance") {
+        this.setState(() => ({
+          sortKey: {}
+        }));
+      } else if (sortValue === "lowest") {
+        this.setState(() => ({
+          sortKey: { "price.min": 1 }
+        }));
+      } else if (sortValue === "highest") {
+        this.setState(() => ({
+          sortKey: { "price.max": -1 }
+        }));
+      } else if (sortValue === "newest") {
+        this.setState(() => ({
+          sortKey: { createdAt: -1 }
+        }));
+      }
+    }
+
+    handlePriceFilter = (id) => {
+      const priceFilterValue = document.getElementById(id).value;
+      const priceArray = priceFilterValue.split("-");
+      this.setState(() => ({
+        priceFilter: {
+          minimumValue: priceArray[0],
+          maximumValue: priceArray[1]
+        }
+      }));
+    }
+
+    handleVendorFilter = (id) => {
+      const vendorFilter = document.getElementById(id).value;
+      this.setState(() => ({
+        vendorFilter,
+        category: vendorFilter
+      }));
+    }
+
     render() {
       return (
         <div>
@@ -85,10 +130,17 @@ const wrapComponent = (Comp) => (
                 handleToggle={this.handleToggle}
                 handleAccountClick={this.handleAccountClick}
                 handleTagClick={this.handleTagClick}
+                handleSort={this.handleSort}
+                handlePriceFilter={this.handlePriceFilter}
+                handleVendorFilter={this.handleVendorFilter}
                 value={this.state.value}
                 unmountMe={this.handleChildUnmount}
                 searchCollection={this.state.collection}
                 facets={this.state.facets}
+                sortKey={this.state.sortKey}
+                priceFilter={this.state.priceFilter}
+                vendorFilter={this.state.vendorFilter}
+                category={this.state.category}
               />
             </div> : null
           }
