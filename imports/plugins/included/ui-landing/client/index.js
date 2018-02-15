@@ -1,1 +1,0 @@
-import './templates/tester.html';

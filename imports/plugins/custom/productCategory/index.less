@@ -1,5 +1,3 @@
-// Styles
-@import "styles/main.less";
 .container-fluid,
 body,
 .carousel,
@@ -17,15 +15,6 @@ body,
   color: white;
 }
 
-.accounts-a-tag:hover,
-.accounts-a-tag:focus {
-  color: #337ab7 !important;
-}
-
-.accounts-btn-tag:hover {
-  background: #245c8a !important;
-}
-
 .rui.textfield input {
   color: black;
 }
@@ -36,12 +25,7 @@ body,
 
 .rui.toolbar,
 .rui.toolbar.admin-shortcut-bar {
-  background: #666666;
-}
-
-.rui.btn-default.icon-only {
-  background-color: #e6e6e6;
-  border-color: #ffffff;
+  background: #ef9113;
 }
 
 .rui.btn-default.flat {
@@ -451,7 +435,7 @@ body,
 }
 
 .slider {
-  // display: inline;
+  display: inline;
 }
 
 
@@ -532,10 +516,11 @@ body,
   background: blue;
 }
 
-// .slick-list {
-//   width: 90% !important;
-//   float: left !important;
-// }
+.slick-list {
+  width: 90% !important;
+  float: left !important;
+}
+
 @media only screen and (max-width:350px) {
   .carousel-caption {
     display: none;
@@ -543,10 +528,10 @@ body,
 }
 
 @media only screen and (max-width:1080px) {
-  // .slick-list {
-  //   width: 80% !important;
-  //   float: left !important;
-  // }
+  .slick-list {
+    width: 80% !important;
+    float: left !important;
+  }
 }
 
 @media only screen and (min-width:481px) and (max-width: 770px) {
@@ -575,10 +560,11 @@ body,
   }
   .list-group-item {
     text-align: center;
-  } // .slick-list {
-  //   width: 80% !important;
-  //   float: left !important;
-  // }
+  }
+  .slick-list {
+    width: 80% !important;
+    float: left !important;
+  }
   .previousImg {
     display: inline-flex;
     padding-left: 1rem;

@@ -42,7 +42,7 @@ function loadMoreProducts() {
   }
 }
 
-const wrapComponent = (Comp) => (
+const wrapComponent = Comp =>
   class ProductsContainer extends Component {
     static propTypes = {
       canLoadMoreProducts: PropTypes.bool,
@@ -78,19 +78,19 @@ const wrapComponent = (Comp) => (
       }
 
       return false;
-    }
+    };
 
     loadMoreProducts = () => {
       return this.props.canLoadMoreProducts === true;
-    }
+    };
 
-    loadProducts = (event) => {
+    loadProducts = event => {
       event.preventDefault();
       this.setState({
         initialLoad: false
       });
       loadMoreProducts();
-    }
+    };
 
     render() {
       return (
@@ -104,8 +104,7 @@ const wrapComponent = (Comp) => (
         />
       );
     }
-  }
-);
+  };
 
 function composer(props, onData) {
   window.prerenderReady = false;
@@ -167,11 +166,10 @@ function composer(props, onData) {
   }
 
   const activeShopsIds = Shops.find({
-    $or: [
-      { "workflow.status": "active" },
-      { _id: Reaction.getPrimaryShopId() }
-    ]
-  }).fetch().map(activeShop => activeShop._id);
+    $or: [{ "workflow.status": "active" }, { _id: Reaction.getPrimaryShopId() }]
+  })
+    .fetch()
+    .map(activeShop => activeShop._id);
 
   const productCursor = Products.find({
     ancestors: [],
@@ -179,12 +177,11 @@ function composer(props, onData) {
     shopId: { $in: activeShopsIds }
   });
 
-  const products = productCursor.map((product) => {
+  const products = productCursor.map(product => {
     return applyProductRevision(product);
   });
 
   const sortedProducts = ReactionProduct.sortProducts(products, currentTag);
-
 
   canLoadMoreProducts = productCursor.count() >= Session.get("productScrollLimit");
   const stateProducts = sortedProducts;
@@ -203,12 +200,8 @@ function composer(props, onData) {
   });
 }
 
-registerComponent("Products", ProductsComponent, [
-  composeWithTracker(composer),
-  wrapComponent
-]);
+registerComponent("Products", ProductsComponent, [composeWithTracker(composer), wrapComponent]);
 
-export default compose(
-  composeWithTracker(composer),
-  wrapComponent
-)(ProductsComponent);
+export default compose(composeWithTracker(composer), wrapComponent)(ProductsComponent);
+
+export { wrapComponent as productComponentWrapper };

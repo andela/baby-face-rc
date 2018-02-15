@@ -10,12 +10,12 @@ import { Tags, Media, Templates } from "/lib/collections";
 import { Countries } from "/client/collections";
 import { ProductAdmin } from "../components";
 
-const wrapComponent = (Comp) => (
+const wrapComponent = Comp =>
   class ProductAdminContainer extends Component {
     static propTypes = {
       product: PropTypes.object,
       tags: PropTypes.arrayOf(PropTypes.object)
-    }
+    };
 
     constructor(props) {
       super(props);
@@ -28,13 +28,13 @@ const wrapComponent = (Comp) => (
       };
     }
 
-    handleCardExpand = (cardName) => {
+    handleCardExpand = cardName => {
       Reaction.state.set("edit/focus", cardName);
-    }
+    };
 
-    handleDeleteProduct = (product) => {
+    handleDeleteProduct = product => {
       ReactionProduct.archiveProduct(product || this.product);
-    }
+    };
 
     handleProductFieldSave = (productId, fieldName, value) => {
       let updateValue = value;
@@ -42,22 +42,21 @@ const wrapComponent = (Comp) => (
       if (fieldName === "handle") {
         updateValue = Reaction.getSlug(value);
       }
-      Meteor.call("products/updateProductField", productId, fieldName, updateValue, (error) => {
+      Meteor.call("products/updateProductField", productId, fieldName, updateValue, error => {
         if (error) {
           Alerts.toast(error.message, "error");
           this.forceUpdate();
         }
       });
-    }
+    };
 
-
-    handleMetaChange = (metafield) => {
+    handleMetaChange = metafield => {
       const newState = {
         newMetafield: metafield
       };
 
       this.setState(newState);
-    }
+    };
 
     handleMetafieldSave = (productId, metafield, index) => {
       // update existing metafield
@@ -73,15 +72,15 @@ const wrapComponent = (Comp) => (
           value: ""
         }
       });
-    }
+    };
 
     handleMetaRemove = (productId, metafield) => {
       Meteor.call("products/removeMetaFields", productId, metafield);
-    }
+    };
 
-    handleProductRestore = (product) => {
+    handleProductRestore = product => {
       Meteor.call("products/updateProductField", product._id, "isDeleted", false);
-    }
+    };
 
     render() {
       return (
@@ -98,8 +97,7 @@ const wrapComponent = (Comp) => (
         />
       );
     }
-  }
-);
+  };
 
 function composer(props, onData) {
   const product = ReactionProduct.selectedProduct();
@@ -118,13 +116,16 @@ function composer(props, onData) {
     const selectedVariant = ReactionProduct.selectedVariant();
 
     if (selectedVariant) {
-      media = Media.find({
-        "metadata.variantId": selectedVariant._id
-      }, {
-        sort: {
-          "metadata.priority": 1
+      media = Media.find(
+        {
+          "metadata.variantId": selectedVariant._id
+        },
+        {
+          sort: {
+            "metadata.priority": 1
+          }
         }
-      });
+      );
     }
 
     revisonDocumentIds = [product._id];
@@ -134,7 +135,7 @@ function composer(props, onData) {
       provides: "template",
       templateFor: { $in: ["pdp"] },
       enabled: true
-    }).map((template) => {
+    }).map(template => {
       return {
         label: template.title,
         value: template.name
@@ -160,13 +161,7 @@ function composer(props, onData) {
   }
 }
 
-registerComponent("ProductAdmin", ProductAdmin, [
-  composeWithTracker(composer),
-  wrapComponent
-]);
+registerComponent("ProductAdmin", ProductAdmin, [composeWithTracker(composer), wrapComponent]);
 
 // Decorate component and export
-export default compose(
-  composeWithTracker(composer),
-  wrapComponent
-)(ProductAdmin);
+export default compose(composeWithTracker(composer), wrapComponent)(ProductAdmin);
