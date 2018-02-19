@@ -8,7 +8,7 @@ const adminOnboarding = [
     element: ".toolbar-vertical",
     intro: `<h4>Toolbar Menu</h4>
     <hr />
-    <p>This is the toolbar interface for performing common functions</p>`
+    <p>This is the toolbar interface for performing admin functions</p>`
   },
   {
     element: ".left",

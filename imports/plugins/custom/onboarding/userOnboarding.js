@@ -2,13 +2,13 @@ const userOnboarding = [
   {
     intro: `<h4>Welcome to Reaction Commerce</h4>
     <hr />
-    <p>Experience a quick tour of how to navigation through the interface of the application</p>`
+    <p>Experience a quick tour of how to navigate through the interface of the application</p>`
   },
   {
     element: "#cart-container",
     intro: `<h4>Shopping Cart</h4>
     <hr />
-    <p>Click here to proceed to checkout all the products already selected for purchase</p>`
+    <p>Click here to view all the products you have added to cart</p>`
   },
   {
     element: "#accounts",
@@ -18,9 +18,9 @@ const userOnboarding = [
   },
   {
     element: "#static-pages",
-    intro: `<h4>Pages</h4>
+    intro: `<h4>Quick Links</h4>
     <hr />
-    <p>Click here to access static pages for more information</p>`
+    <p>Click here to access links to shop information</p>`
   },
   {
     element: "#currencies",
