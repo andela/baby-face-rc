@@ -6,7 +6,7 @@ import { Components, composeWithTracker } from "@reactioncommerce/reaction-compo
 
 
 const ProductReview = (props) => {
-  const { emails, username } = props.user;
+  const { emails, username, name } = props.user;
 
   const rating =
     <div style={{ marginTop: "1rem" }}>
@@ -24,7 +24,7 @@ const ProductReview = (props) => {
   const userDetailsAndDate = (
     <div style={{ verticalAlign: "top", display: "inline-block" }}>
       <p style={{ marginLeft: "1rem", fontSize: "1.5rem", marginBottom: "0" }}>
-        {username || "Guest"}
+        {name || username || "Guest"}
       </p>
       <span style={{ marginLeft: "1rem" }}>
         {props.review.createdAt.toDateString()}
@@ -53,7 +53,7 @@ function composer(props, onData) {
   if (subHandle.ready()) {
     const user = Meteor.users.findOne({
       _id: props.review.userId
-    }, { fields: { emails: 1, username: 1 } });
+    }, { fields: { emails: 1, username: 1, name: 1 } });
     onData(null, { user });
   }
 }
