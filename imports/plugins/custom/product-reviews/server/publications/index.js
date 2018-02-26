@@ -13,5 +13,5 @@ Meteor.publish("Users", function (userId) {
   check(userId, String);
   return Meteor.users.find({
     _id: userId
-  }, { fields: { emails: 1, username: 1 } });
+  }, { fields: { emails: 1, username: 1, name: 1 } });
 });

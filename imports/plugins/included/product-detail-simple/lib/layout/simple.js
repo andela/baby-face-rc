@@ -28,6 +28,10 @@ export default function blocks() {
           }
         },
 
+        {
+          component: "ShopLink"
+        },
+
         // PageTitle
         {
           component: "ProductField",
