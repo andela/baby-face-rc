@@ -1,0 +1,25 @@
+.wallet-dashboard{
+    .wallet-dashboard-intro{
+      display: flex;
+      flex-direction: column;
+  
+      @media (min-width: @screen-sm) {
+        flex-direction: row;
+        justify-content: space-between;
+  
+        .wallet-dashboard-balance{
+          width: 25%;
+        }
+  
+        .wallet-dashboard-action{
+          width: 30%;
+        }
+      }
+  
+      .wallet-dashboard-balance{
+        .panel-body{
+          text-align: center;
+        }
+      }
+    }
+  }

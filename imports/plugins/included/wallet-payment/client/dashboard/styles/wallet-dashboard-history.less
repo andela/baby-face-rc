@@ -1,0 +1,28 @@
+.wallet-dashboard-history{
+    .transaction{
+      &:first-of-type{
+        td{
+          border-top: 0;
+        }
+      }
+      .transaction__info{
+        display: flex;
+        flex-direction: column;
+  
+        @media (min-width: @screen-sm) {
+          flex-direction: row;
+          justify-content: space-between;
+  
+          .transaction__info-date{
+            margin-left: 2rem;
+          }
+        }
+      }
+    }
+    .panel-heading{
+      padding: 15px 20px;
+      background-color: #23566d;
+      color: #fff;
+    }
+  }
+  
