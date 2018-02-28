@@ -33,7 +33,7 @@ class Wallet extends Component {
           onClick={this.toggleBody}
         >
           <i className="fa fa-google-wallet" />
-          <span id="btn-complete-order" data-i18n="checkoutPayment.completeYourOrder">&nbsp Pay With Wallet</span>
+          <span id="btn-complete-order" data-i18n="checkoutPayment.completeYourOrder"> Pay With Wallet</span>
         </button>
         {
           showBody &&
