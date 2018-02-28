@@ -32,7 +32,7 @@ const handlers = {
 
       if (amount > customerBalance) {
         return reject({
-          message: "You dont have enough for this purchase, please fund your wallet",
+          message: "Insufficient Balance! Please fund your wallet.",
           type: "error"
         });
       }

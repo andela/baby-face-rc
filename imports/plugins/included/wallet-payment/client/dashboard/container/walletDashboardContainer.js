@@ -13,8 +13,8 @@ import walletDashboard from "../components/walletDashboard";
 const handlers = {
   fundWallet: function fundWallet(amount) {
     return new Promise((resolve, reject) => {
-      if (amount <= 0) {
-        return reject(new Error("invalid amount, please try again"));
+      if (amount <= 99) {
+        return reject(new Error("Invalid amount! Amount must be N100 or greater"));
       }
 
       Meteor.subscribe("Packages", Reaction.getShopId());
@@ -83,11 +83,11 @@ const handlers = {
       }
 
       if (amount <= 0) {
-        return reject(new Error("invalid amount, please try again"));
+        return reject(new Error("Invalid amount! Amount must be greater than zero"));
       }
 
       if (amount > senderBalance) {
-        return reject(new Error("You dont have enough for this transfer, please fund your wallet"));
+        return reject(new Error("Insufficient Balance! Please fund your wallet"));
       }
 
       Meteor.call("wallet/get-user-walletId", receiverEmail, (getWalletIdError, receiverWalletId) => {

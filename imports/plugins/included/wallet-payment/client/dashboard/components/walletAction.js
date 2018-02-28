@@ -53,13 +53,13 @@ class WalletAction extends Component {
     } else {
       email = this.emailInput.value;
       swal({
-        title: "Are you sure?",
-        text: "You won't be able to revert this transfer",
+        title: "Confirm funds transfer",
+        text: "Transfers are irreversible! Click yes to confirm transaction",
         type: "warning",
         showCancelButton: true,
-        confirmButtonColor: "#3085d6",
+        confirmButtonColor: "#337ab7;",
         cancelButtonColor: "#d33",
-        confirmButtonText: "Yes, transfer"
+        confirmButtonText: "Yes"
       })
         .then(() => this.props.formHandler(amount, email, this.props.wallet))
         .then((transferSuccess) => {
@@ -98,10 +98,9 @@ class WalletAction extends Component {
                 actionType === "transfer"
                 &&
                 <label>
-                  Wallet Holder Email
                   <input
                     type="email"
-                    placeholder="e.g: johdoe@mail.com"
+                    placeholder="Recipient's Email e.g: babyface@mail.com"
                     ref={(node) => (this.emailInput = node)}
                     required
                   />
@@ -109,10 +108,9 @@ class WalletAction extends Component {
 
               }
               <label>
-                Amount (in Naira)
                 <input
                   type="number"
-                  placeholder="e.g: 5000"
+                  placeholder="Amount e.g: 100"
                   ref={(node) => (this.amountInput = node)}
                   required
                 />

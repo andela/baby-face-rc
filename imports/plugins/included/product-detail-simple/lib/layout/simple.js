@@ -28,6 +28,10 @@ export default function blocks() {
           }
         },
 
+        {
+          component: "ShopLink"
+        },
+
         // PageTitle
         {
           component: "ProductField",
@@ -68,6 +72,10 @@ export default function blocks() {
         // Media Gallery
         {
           component: "MediaGalleryContainer"
+        },
+        // Product Rating
+        {
+          component: "ProductRating"
         },
 
         // Tags
@@ -191,6 +199,44 @@ export default function blocks() {
           }
         }
 
+      ]
+    },
+
+    {
+      type: "block",
+      columns: 8,
+      permissions: ["guest"],
+      audience: ["guest"],
+      children: [
+        // Media Gallery
+        {
+          component: "ProductReviewForm",
+          props: {
+            style: {
+              paddingTop: 120,
+              marginTop: 500
+            }
+          }
+        }
+      ]
+    },
+
+    {
+      type: "block",
+      columns: 8,
+      permissions: ["guest"],
+      audience: ["guest"],
+      children: [
+        // Media Gallery
+        {
+          component: "ProductReviews",
+          props: {
+            style: {
+              paddingTop: 120,
+              marginTop: 500
+            }
+          }
+        }
       ]
     }
   ];

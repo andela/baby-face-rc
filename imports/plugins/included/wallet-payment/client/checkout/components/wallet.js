@@ -33,18 +33,18 @@ class Wallet extends Component {
           onClick={this.toggleBody}
         >
           <i className="fa fa-google-wallet" />
-          <span id="btn-complete-order" data-i18n="checkoutPayment.completeYourOrder">Wallet</span>
+          <span id="btn-complete-order" data-i18n="checkoutPayment.completeYourOrder">&nbsp Pay With Wallet</span>
         </button>
         {
           showBody &&
           <div className="panel-body">
             <p className="wallet-checkout__balance">
-            Balance: ₦{roundUp(this.props.wallet.balance)}
+              <h2>Balance: ₦{roundUp(this.props.wallet.balance)}</h2>
             </p>
             <button
               className="btn btn-success col-md-8 wallet-checkout__pay"
               onClick={this.handleButtonClick}
-            >Pay now</button>
+            >Pay</button>
           </div>
         }
 

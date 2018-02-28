@@ -11,7 +11,7 @@ class WalletHistory extends Component {
           <td
             colSpan={2}
             style={{ textAlign: "center" }}
-          >No transaction yet, please fund your wallet</td>
+          >You have not made any transactions</td>
         </tr>
       );
     }

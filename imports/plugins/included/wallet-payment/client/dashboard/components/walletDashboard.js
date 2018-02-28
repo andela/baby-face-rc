@@ -81,14 +81,14 @@ class  WalletDashboard extends Component {
             </div>
             <WalletAction
               actionType="fund"
-              headerTitle="Fund my wallet"
-              buttonText="Fund My Wallet"
+              headerTitle="Fund Wallet"
+              buttonText="Go"
               formHandler={fundWallet}
               wallet={wallet}
             />
             <WalletAction
               actionType="transfer"
-              headerTitle="Transfer To Wallet"
+              headerTitle="Transfer Funds"
               buttonText="Transfer"
               formHandler={transferToWallet}
               wallet={wallet}

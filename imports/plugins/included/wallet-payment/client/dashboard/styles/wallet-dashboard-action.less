@@ -6,7 +6,8 @@
         margin-bottom: 1.5rem;
   
         input{
-          border: 1px solid black;
+          border: 1px solid #337ab7;
+          border-radius: 5px;
           display: block;
           width: 100%;
           margin-top: .5rem;
@@ -15,15 +16,35 @@
         }
       }
       button{
-        background-color: @rui-success;
+        background-color: #e8e8e8;
         font-size: 1.5rem;
         padding: .5rem 0;
+        color: #000;
+        border: none;
+        border-radius: 5px;
+      }
+      button:hover{
+        background-color: #337ab7;
         color: #fff;
+      }
+      label{
+        font-weight: normal;
+        color: #505050;
       }
     }
     .panel-heading{
       padding: 15px 20px;
-      background-color: #23566d;
+      background-color: #337ab7;
       color: #fff;
+      text-align: center;
     }
+  }
+  .wallet-dashboard-balance{
+    .panel-heading{
+      padding: 15px 20px;
+      background-color: #337ab7;
+      color: #fff;
+      text-align: center;
+    }
+
   }

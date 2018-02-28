@@ -156,7 +156,8 @@ export default function () {
     isVisible: true,
     publishedAt: new Date(),
     createdAt: new Date(),
-    updatedAt: new Date()
+    updatedAt: new Date(),
+    category: "others"
   };
 
   Factory.define("product", Products, Object.assign({}, base, product));
