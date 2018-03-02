@@ -1,68 +1,87 @@
 <head>
   <!-- Google Analytics -->
   <script>
-  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+    (function (i, s, o, g, r, a, m) {
+      i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () {
+        (i[r].q = i[r].q || []).push(arguments)
+      }, i[r].l = 1 * new Date(); a = s.createElement(o),
+        m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m)
+    })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
   </script>
   <!-- End Google Analytics -->
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-114930630-1"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+
+    gtag('config', 'UA-114930630-1');
+  </script>
+
+
+  <!-- segment.io -->
+  <!-- <script>
+    !function(){var analytics=window.analytics=window.analytics||[];if(!analytics.initialize)if(analytics.invoked)window.console&&console.error&&console.error("Segment snippet included twice.");else{analytics.invoked=!0;analytics.methods=["trackSubmit","trackClick","trackLink","trackForm","pageview","identify","reset","group","track","ready","alias","debug","page","once","off","on"];analytics.factory=function(t){return function(){var e=Array.prototype.slice.call(arguments);e.unshift(t);analytics.push(e);return analytics}};for(var t=0;t<analytics.methods.length;t++){var e=analytics.methods[t];analytics[e]=analytics.factory(e)}analytics.load=function(t,e){var n=document.createElement("script");n.type="text/javascript";n.async=!0;n.src=("https:"===document.location.protocol?"https://":"http://")+"cdn.segment.com/analytics.js/v1/"+t+"/analytics.min.js";var o=document.getElementsByTagName("script")[0];o.parentNode.insertBefore(n,o);analytics.integrationOptions=e};analytics.SNIPPET_VERSION="4.0.1";
+    analytics.load("4sImniwi4TGx9JK2QJMTKB35IQry8QeR");
+    analytics.page();
+    }}();
+  </script> -->
+
+  <!-- segment.io end -->
 </head>
 
 <template name="reactionAnalyticsSettings">
   {{#autoForm collection=Collections.Packages schema=Schemas.ReactionAnalyticsPackageConfig doc=packageData type="update" id="analytics-update-form"}}
-    {{#if segmentioEnabled}}
-      <div class="panel panel-default">
-        <div class="panel-heading">
-          <h4 class="panel-title">Segment</h4>
-        </div>
-        <div class="panel-body">
-          {{>afQuickField name="settings.public.segmentio.enabled"}}
-          {{>afQuickField name="settings.public.segmentio.api_key" placeholder="WRITE Key"}}
-          <button type="submit" class="btn btn-primary pull-right" data-i18n="app.saveChanges">Save Changes</button>
-        </div>
-      </div>
-    {{/if}}
-
-    {{#if googleAnalyticsEnabled}}
-        <div class="panel panel-default">
-        <div class="panel-heading">
-          <h4 class="panel-title">Google Analytics</h4>
-        </div>
-        <div class="panel-body">
-          {{>afQuickField name="settings.public.googleAnalytics.enabled"}}
-          {{>afQuickField name="settings.public.googleAnalytics.api_key" placeholder="UA-XXXXX-X"}}
-          <button type="submit" class="btn btn-primary pull-right" data-i18n="app.saveChanges">Save Changes</button>
-        </div>
-      </div>
-    {{/if}}
-
-    {{#if mixpanelEnabled}}
-        <div class="panel panel-default">
-        <div class="panel-heading">
-          <h4 class="panel-title">Mixpanel</h4>
-        </div>
-        <div class="panel-body">
-          {{>afQuickField name="settings.public.mixpanel.enabled"}}
-          {{>afQuickField name="settings.public.mixpanel.api_key" placeholder="TOKEN"}}
-          <button type="submit" class="btn btn-primary pull-right" data-i18n="app.saveChanges">Save Changes</button>
-        </div>
-      </div>
-    {{/if}}
-  {{/autoForm}}
+  {{#if segmentioEnabled}}
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h4 class="panel-title">Segment</h4>
+    </div>
+    <div class="panel-body">
+      {{>afQuickField name="settings.public.segmentio.enabled"}} 
+      {{>afQuickField name="settings.public.segmentio.api_key" placeholder="WRITE Key"}}
+      <button type="submit" class="btn btn-primary pull-right" data-i18n="app.saveChanges">Save Changes</button>
+    </div>
+  </div>
+  {{/if}} {{#if googleAnalyticsEnabled}}
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h4 class="panel-title">Google Analytics</h4>
+    </div>
+    <div class="panel-body">
+      {{>afQuickField name="settings.public.googleAnalytics.enabled"}} 
+      {{>afQuickField name="settings.public.googleAnalytics.api_key" placeholder="UA-XXXXX-X"}}
+      <button type="submit" class="btn btn-primary pull-right" data-i18n="app.saveChanges">Save Changes</button>
+    </div>
+  </div>
+  {{/if}} {{#if mixpanelEnabled}}
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h4 class="panel-title">Mixpanel</h4>
+    </div>
+    <div class="panel-body">
+      {{>afQuickField name="settings.public.mixpanel.enabled"}} 
+      {{>afQuickField name="settings.public.mixpanel.api_key" placeholder="TOKEN"}}
+      <button type="submit" class="btn btn-primary pull-right" data-i18n="app.saveChanges">Save Changes</button>
+    </div>
+  </div>
+  {{/if}} {{/autoForm}}
 
 </template>
 
 
 
 <template name="reactionAnalytics">
-{{#autoForm collection=Collections.Packages schema=Schemas.ReactionAnalyticsPackageConfig doc=packageData type="update" id="analytics-update-form-quick" autosave=true}}
+  {{#autoForm collection=Collections.Packages schema=Schemas.ReactionAnalyticsPackageConfig doc=packageData type="update" id="analytics-update-form-quick" autosave=true}}
   <div class="container-fluid-sm flex">
     <div class="flex-item">
 
       <div class="panel panel-default">
         <div class="panel-heading">
-          <h3 class="panel-title"><span data-i18n="admin.segment.label">Segment</span></h3>
+          <h3 class="panel-title">
+            <span data-i18n="admin.segment.label">Segment</span>
+          </h3>
         </div>
         <div class="list-group">
           <div class="list-group-item">
@@ -83,7 +102,9 @@
     <div class="flex-item">
       <div class="panel panel-default">
         <div class="panel-heading">
-          <h3 class="panel-title"><span data-i18n="admin.googleAnalytics.label">Google Analytics</span></h3>
+          <h3 class="panel-title">
+            <span data-i18n="admin.googleAnalytics.label">Google Analytics</span>
+          </h3>
         </div>
         <div class="list-group">
           <div class="list-group-item">
@@ -104,7 +125,9 @@
     <div class="flex-item">
       <div class="panel panel-default">
         <div class="panel-heading">
-          <h3 class="panel-title"><span data-i18n="admin.mixpanel.label">Mixpanel</span></h3>
+          <h3 class="panel-title">
+            <span data-i18n="admin.mixpanel.label">Mixpanel</span>
+          </h3>
         </div>
         <div class="list-group">
           <div class="list-group-item">
@@ -123,6 +146,6 @@
 
     </div>
   </div>
-{{/autoForm}}
+  {{/autoForm}}
 
 </template>

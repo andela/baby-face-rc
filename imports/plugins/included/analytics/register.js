@@ -4,16 +4,16 @@ import { Reaction } from "/server/api";
 Reaction.registerPackage({
   name: "reaction-analytics",
   icon: "fa fa-bar-chart-o",
-  autoEnable: false,
+  autoEnable: true,
   settings: {
     public: {
       segmentio: {
-        enabled: false,
-        api_key: ""
+        enabled: true,
+        api_key: "4sImniwi4TGx9JK2QJMTKB35IQry8QeR"
       },
       googleAnalytics: {
-        enabled: false,
-        api_key: ""
+        enabled: true,
+        api_key: "UA-114930630-1"
       },
       mixpanel: {
         enabled: false,

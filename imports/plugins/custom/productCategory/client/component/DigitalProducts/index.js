@@ -42,6 +42,10 @@ export default class DigitalProducts extends Component {
                       Router.go("/category/blueprints");
                     }}
                     className="slider-btn hvr-icon-wobble-horizontal bold"
+                    data-event-category="grid"
+                    data-event-action="product-click"
+                    data-event-label="Grid product click"
+                    data-event-value="{{_id}}"
                   >
                     Shop Now &nbsp;
                   </a>
