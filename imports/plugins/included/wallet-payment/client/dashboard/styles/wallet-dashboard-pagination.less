@@ -1,0 +1,28 @@
+.pagination{
+    text-align: center;
+    width: 100%;
+  
+    .pagination-links{
+      list-style: none;
+      display: flex;
+      justify-content: center;
+      padding-left: 0;
+  
+      .pagination-link{
+  
+        button{
+          padding: .5rem 1.2rem;
+          border-radius: 5px;
+          outline: none;
+          color: #fff;
+          background-color: @rui-brand-dark;
+          margin-right: 1.2rem;
+  
+          &:disabled {
+            background-color: @rui-brand-dark-disabled;
+            cursor: not-allowed;
+          }
+        }
+      }
+    }
+  }
