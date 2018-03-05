@@ -38,7 +38,7 @@ const handlers = {
       }
 
 
-      Meteor.call("wallet/get-user-walletId", shopOwnerEmail, (getWalletIdError, shopOwnerWalletId) => {
+      Meteor.call("wallet/get-user-walletId", customerEmail, (getWalletIdError, shopOwnerWalletId) => {
         if (getWalletIdError) {
           return reject({
             message: getWalletIdError.message,
