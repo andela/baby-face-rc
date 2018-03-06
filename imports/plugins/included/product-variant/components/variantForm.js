@@ -4,6 +4,8 @@ import classnames from "classnames";
 import _ from "lodash";
 import Velocity from "velocity-animate";
 import "velocity-animate/velocity.ui";
+import axios from "axios";
+import Dropzone from "react-dropzone";
 import { Components } from "@reactioncommerce/reaction-components";
 import { formatPriceString } from "/client/api";
 
@@ -39,6 +41,16 @@ const fieldGroups = {
   lowInventoryWarningThreshold: { group: "inventoryManagement" }
 };
 
+const dropZoneStyle = {
+  backgroundColor: "#f2f2f2",
+  height: "100px",
+  width: "100%"
+};
+
+const changeFileStyle = {
+  border: "none"
+};
+
 class VariantForm extends Component {
   constructor(props) {
     super(props);
@@ -48,7 +60,11 @@ class VariantForm extends Component {
       variant: props.variant,
       inventoryPolicy: props.variant.inventoryPolicy,
       taxable: props.variant.taxable,
-      inventoryManagement: props.variant.inventoryManagement
+      inventoryManagement: props.variant.inventoryManagement,
+      isUploadingFile: false,
+      fileUploaded: false,
+      fileName: ""
+
     };
   }
 
@@ -197,6 +213,54 @@ class VariantForm extends Component {
     return this.state.expandedCard === groupName;
   }
 
+  handleDrop = files => {
+    const formData = new FormData();
+    formData.append("file", files[0]);
+    formData.append("upload_preset", "o62xeo3k");
+    formData.append("api_key", "281293666534996");
+
+    this.setState({
+      isUploadingFile: true
+    });
+
+    return axios.post("https://api.cloudinary.com/v1_1/heavyman/auto/upload", formData)
+      .then((response) => {
+        const secureUrl = response.data.secure_url;
+        const size = response.data.bytes;
+        const fileName = response.data.original_filename;
+        this.setState(({ variant }) => ({
+          variant: {
+            ...variant,
+            digitalFileDownloadLink: secureUrl,
+            digitalFileSize: size
+          },
+          isUploadingFile: false,
+          fileUploaded: true,
+          fileName
+        }), () => {
+          if (this.props.onVariantFieldSave) {
+            this.props.onVariantFieldSave(this.variant._id, "isDigital", true, this.state.variant);
+            this.props.onVariantFieldSave(this.variant._id, "digitalFileDownloadLink", secureUrl, this.state.variant);
+            this.props.onVariantFieldSave(this.variant._id, "digitalFileSize", size, this.state.variant);
+            this.props.onVariantFieldSave(this.variant._id, "inventoryManagement", false, this.state.variant);
+            this.props.onVariantFieldSave(this.variant._id, "isSoldOut", false, this.state.variant);
+            this.props.onVariantFieldSave(this.variant._id, "isLowQuantity", false, this.state.variant);
+            Alerts.toast("File uploaded successfully.", "success");
+          }
+        });
+      })
+      .catch(() => Alerts.toast("Error uploading file, Please try again", "error"));
+  }
+
+  handleChangeFile = files => {
+    this.setState({
+      isUploadingFile: true,
+      fileName: ""
+    });
+
+    this.handleDrop(files);
+  }
+
   renderTaxCodeField() {
     if (this.props.isProviderEnabled()) {
       return (
@@ -343,6 +407,53 @@ class VariantForm extends Component {
     );
   }
 
+  renderDropzone() {
+    return (
+      <Dropzone
+        multiple={false}
+        onDrop={this.handleDrop}
+        style={dropZoneStyle}
+      >
+        {!this.state.isUploadingFile &&
+          <div className="text-center add">
+            <p className="pt-10">Drop files here or click here to upload</p>
+            <i className="fa fa-plus fa-2x" aria-hidden="true" />
+          </div>}
+        {this.state.isUploadingFile &&
+          <div className="text-center">
+            <p className="pt-30">
+              <i className="fa fa-spinner fa-spin fa-2x" />
+            </p>
+          </div>}
+      </Dropzone>
+    );
+  }
+
+  renderUploadedFile() {
+    return (
+      <div>
+        <p className="thumbnail">
+          {this.state.fileName}
+        </p>
+        <Dropzone
+          multiple={false}
+          onDrop={this.handleChangeFile}
+          style={changeFileStyle}
+        >
+          <div className="rui items flex">
+            <div className="rui item full justify center">
+              <Components.IconButton
+                icon="fa fa-pencil"
+                tooltip="Change file"
+                primary={true}
+              />
+            </div>
+          </div>
+        </Dropzone>
+      </div>
+    );
+  }
+
   renderVariantFields() {
     const cardName = `variant-${this.variant._id}`;
 
@@ -441,71 +552,87 @@ class VariantForm extends Component {
               </div>
             </div>
             <Components.Divider />
-            <div className="row">
-              <div className="col-sm-6">
-                <Components.TextField
-                  i18nKeyLabel="productVariant.width"
-                  i18nKeyPlaceholder="0"
-                  placeholder="0"
-                  label="Width"
-                  name="width"
-                  ref="widthInput"
-                  value={this.variant.width}
-                  onBlur={this.handleFieldBlur}
-                  onChange={this.handleFieldChange}
-                  onReturnKeyDown={this.handleFieldBlur}
-                  validation={this.props.validation}
-                />
-              </div>
-              <div className="col-sm-6">
-                <Components.TextField
-                  i18nKeyLabel="productVariant.length"
-                  i18nKeyPlaceholder="0"
-                  placeholder="0"
-                  label="Length"
-                  name="length"
-                  ref="lengthInput"
-                  value={this.variant.length}
-                  onBlur={this.handleFieldBlur}
-                  onChange={this.handleFieldChange}
-                  onReturnKeyDown={this.handleFieldBlur}
-                  validation={this.props.validation}
-                />
-              </div>
-            </div>
+            {!this.props.currentProduct.isDigital &&
+              <div className="row">
+                <div className="col-sm-6">
+                  <Components.TextField
+                    i18nKeyLabel="productVariant.width"
+                    i18nKeyPlaceholder="0"
+                    placeholder="0"
+                    label="Width"
+                    name="width"
+                    ref="widthInput"
+                    value={this.variant.width}
+                    onBlur={this.handleFieldBlur}
+                    onChange={this.handleFieldChange}
+                    onReturnKeyDown={this.handleFieldBlur}
+                    validation={this.props.validation}
+                  />
+                </div>
+                <div className="col-sm-6">
+                  <Components.TextField
+                    i18nKeyLabel="productVariant.length"
+                    i18nKeyPlaceholder="0"
+                    placeholder="0"
+                    label="Length"
+                    name="length"
+                    ref="lengthInput"
+                    value={this.variant.length}
+                    onBlur={this.handleFieldBlur}
+                    onChange={this.handleFieldChange}
+                    onReturnKeyDown={this.handleFieldBlur}
+                    validation={this.props.validation}
+                  />
+                </div>
+              </div>}
 
-            <div className="row">
-              <div className="col-sm-6">
-                <Components.TextField
-                  i18nKeyLabel="productVariant.height"
-                  i18nKeyPlaceholder="0"
-                  placeholder="0"
-                  label="Height"
-                  name="height"
-                  ref="heightInput"
-                  value={this.variant.height}
-                  onBlur={this.handleFieldBlur}
-                  onChange={this.handleFieldChange}
-                  onReturnKeyDown={this.handleFieldBlur}
-                  validation={this.props.validation}
-                />
-              </div>
-              <div className="col-sm-6">
-                <Components.TextField
-                  i18nKeyLabel="productVariant.weight"
-                  i18nKeyPlaceholder="0"
-                  placeholder="0"
-                  label="Weight"
-                  name="weight"
-                  ref="weightInput"
-                  value={this.variant.weight}
-                  onBlur={this.handleFieldBlur}
-                  onChange={this.handleFieldChange}
-                  onReturnKeyDown={this.handleFieldBlur}
-                  validation={this.props.validation}
-                />
-              </div>
-            </div>
+            {!this.props.currentProduct.isDigital &&
+              <div className="row">
+                <div className="col-sm-6">
+                  <Components.TextField
+                    i18nKeyLabel="productVariant.height"
+                    i18nKeyPlaceholder="0"
+                    placeholder="0"
+                    label="Height"
+                    name="height"
+                    ref="heightInput"
+                    value={this.variant.height}
+                    onBlur={this.handleFieldBlur}
+                    onChange={this.handleFieldChange}
+                    onReturnKeyDown={this.handleFieldBlur}
+                    validation={this.props.validation}
+                  />
+                </div>
+                <div className="col-sm-6">
+                  <Components.TextField
+                    i18nKeyLabel="productVariant.weight"
+                    i18nKeyPlaceholder="0"
+                    placeholder="0"
+                    label="Weight"
+                    name="weight"
+                    ref="weightInput"
+                    value={this.variant.weight}
+                    onBlur={this.handleFieldBlur}
+                    onChange={this.handleFieldChange}
+                    onReturnKeyDown={this.handleFieldBlur}
+                    validation={this.props.validation}
+                  />
+                </div>
+              </div>}
+
+            {this.props.currentProduct.isDigital &&
+              <div className="row">
+                {this.state.fileName === "" &&
+                  <div>
+                    {this.renderDropzone()}
+                  </div>
+                }
+                {this.state.fileName !== "" &&
+                  <div>
+                    {this.renderUploadedFile()}
+                  </div>
+                }
+              </div>}
           </Components.CardBody>
         </Components.Card>
 
@@ -536,39 +663,40 @@ class VariantForm extends Component {
           />
         </Components.SettingsCard>
 
-        <Components.SettingsCard
-          enabled={this.state.inventoryManagement}
-          expandable={true}
-          i18nKeyTitle="productVariant.inventoryManagement"
-          name="inventoryManagement"
-          packageName={"reaction-product-variant"}
-          saveOpenStateToPreferences={true}
-          showSwitch={true}
-          title="Inventory Tracking"
-          onSwitchChange={this.handleCheckboxChange}
-        >
-          <div className="row">
-            {this.renderQuantityField()}
-            <div className="col-sm-6">
-              <Components.TextField
-                i18nKeyLabel="productVariant.lowInventoryWarningThreshold"
-                i18nKeyPlaceholder="0"
-                placeholder="0"
-                label="Warn At"
-                name="lowInventoryWarningThreshold"
-                ref="lowInventoryWarningThresholdInput"
-                value={this.variant.lowInventoryWarningThreshold}
-                onBlur={this.handleFieldBlur}
-                onChange={this.handleFieldChange}
-                onReturnKeyDown={this.handleFieldBlur}
-                validation={this.props.validation}
-              />
+        {!this.props.currentProduct.isDigital &&
+          <Components.SettingsCard
+            enabled={this.state.inventoryManagement}
+            expandable={true}
+            i18nKeyTitle="productVariant.inventoryManagement"
+            name="inventoryManagement"
+            packageName={"reaction-product-variant"}
+            saveOpenStateToPreferences={true}
+            showSwitch={true}
+            title="Inventory Tracking"
+            onSwitchChange={this.handleCheckboxChange}
+          >
+            <div className="row">
+              {this.renderQuantityField()}
+              <div className="col-sm-6">
+                <Components.TextField
+                  i18nKeyLabel="productVariant.lowInventoryWarningThreshold"
+                  i18nKeyPlaceholder="0"
+                  placeholder="0"
+                  label="Warn At"
+                  name="lowInventoryWarningThreshold"
+                  ref="lowInventoryWarningThresholdInput"
+                  value={this.variant.lowInventoryWarningThreshold}
+                  onBlur={this.handleFieldBlur}
+                  onChange={this.handleFieldChange}
+                  onReturnKeyDown={this.handleFieldBlur}
+                  validation={this.props.validation}
+                />
+              </div>
             </div>
-          </div>
-          <div className="row">
-            {this.renderInventoryPolicyField()}
-          </div>
-        </Components.SettingsCard>
+            <div className="row">
+              {this.renderInventoryPolicyField()}
+            </div>
+          </Components.SettingsCard>}
       </Components.CardGroup>
     );
   }
@@ -775,6 +903,7 @@ class VariantForm extends Component {
 VariantForm.propTypes = {
   cloneVariant: PropTypes.func,
   countries: PropTypes.arrayOf(PropTypes.object),
+  currentProduct: PropTypes.object,
   editFocus: PropTypes.oneOfType([PropTypes.string, PropTypes.arrayOf(PropTypes.string)]),
   fetchTaxCodes: PropTypes.func,
   greyDisabledFields: PropTypes.func,

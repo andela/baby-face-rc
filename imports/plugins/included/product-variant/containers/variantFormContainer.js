@@ -175,6 +175,10 @@ const wrapComponent = (Comp) => (
         });
     }
 
+    currentProduct = () => (
+      ReactionProduct.selectedProduct()
+    );
+
     handleVariantFieldSave = (variantId, fieldName, value, variant) => {
       const validationStatus = this.runVariantValidation(variant);
 
@@ -261,6 +265,7 @@ const wrapComponent = (Comp) => (
             isDeleted={this.state.isDeleted}
             {...this.props}
             variant={this.props.variant}
+            currentProduct={this.currentProduct()}
           />
         );
       }
