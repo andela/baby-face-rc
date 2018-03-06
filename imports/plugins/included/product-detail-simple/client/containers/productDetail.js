@@ -126,20 +126,21 @@ const wrapComponent = (Comp) => (
           productId = currentProduct._id;
 
           if (productId) {
-            Meteor.call("cart/addToCart", productId, currentVariant._id, quantity, (error) => {
-              if (error) {
-                Logger.error(error, "Failed to add to cart.");
-                return error;
-              }
-              // Reset cart quantity on success
-              this.handleCartQuantityChange(null, 1);
+            Meteor.call("cart/addToCart", productId, currentVariant._id, quantity,
+              { isDigital: currentProduct.isDigital }, (error) => {
+                if (error) {
+                  Logger.error(error, "Failed to add to cart.");
+                  return error;
+                }
+                // Reset cart quantity on success
+                this.handleCartQuantityChange(null, 1);
 
-              this.setState(({ productClick }) => ({
-                productClick: productClick + 1
-              }));
+                this.setState(({ productClick }) => ({
+                  productClick: productClick + 1
+                }));
 
-              return true;
-            });
+                return true;
+              });
           }
 
           // template.$(".variant-select-option").removeClass("active");
