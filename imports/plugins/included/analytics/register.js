@@ -12,7 +12,7 @@ Reaction.registerPackage({
         api_key: "4sImniwi4TGx9JK2QJMTKB35IQry8QeR"
       },
       googleAnalytics: {
-        enabled: true,
+        enabled: false,
         api_key: "UA-114930630-1"
       },
       mixpanel: {
@@ -21,24 +21,29 @@ Reaction.registerPackage({
       }
     }
   },
-  registry: [{
-    provides: ["dashboard"],
-    label: "Analytics",
-    description: "Analytics and tracking integrations",
-    template: "reactionAnalytics",
-    icon: "fa fa-bar-chart-o",
-    priority: 3,
-    container: "connect",
-    permissions: [{
-      label: "Reaction Analytics",
-      permission: "dashboard/analytics"
-    }]
-  }, {
-    label: "Analytics Settings",
-    icon: "fa fa-bar-chart-o",
-    route: "/dashboard/analytics/settings",
-    provides: ["settings"],
-    container: "dashboard",
-    template: "reactionAnalyticsSettings"
-  }]
+  registry: [
+    {
+      provides: ["dashboard"],
+      label: "Analytics",
+      description: "Analytics and tracking integrations",
+      template: "reactionAnalytics",
+      icon: "fa fa-bar-chart-o",
+      priority: 3,
+      container: "connect",
+      permissions: [
+        {
+          label: "Reaction Analytics",
+          permission: "dashboard/analytics"
+        }
+      ]
+    },
+    {
+      label: "Analytics Settings",
+      icon: "fa fa-bar-chart-o",
+      route: "/dashboard/analytics/settings",
+      provides: ["settings"],
+      container: "dashboard",
+      template: "reactionAnalyticsSettings"
+    }
+  ]
 });

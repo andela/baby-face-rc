@@ -3,5 +3,5 @@ import { addRolesToGroups } from "/server/api/core/addDefaultRoles";
 
 
 Hooks.Events.add("afterCoreInit", () => {
-  addRolesToGroups({ allShops: true, roles: ["dashboard/analysis"], shops: [], groups: ["guest", "anonymous", "customer"] });
+  addRolesToGroups({ allShops: true, roles: ["analytics"], shops: [], groups: ["guest", "anonymous", "customer"] });
 });

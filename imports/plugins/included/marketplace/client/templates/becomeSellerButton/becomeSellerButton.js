@@ -10,7 +10,7 @@ Template.becomeSellerButton.events({
         return Alerts.toast(`${errorMessage} ${error}`, "error");
       }
 
-      const success = i18next.t("marketplace.yourShopIsReady", { defaultValue: "Your shop is now ready!" });
+      const success = i18next.t("marketplace.yourShopIsReady", { defaultValue: "Your request was successfully submitted, We will get back to you shortly!" });
       Reaction.setShopId(response.shopId);
       return Alerts.toast(success, "success");
     });
