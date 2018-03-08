@@ -20,7 +20,20 @@ const CompletedOrderItem = ({ item, handleDisplayMedia }) => {
     <div className="row order-details-line">
       <div className="order-details-media"><img src={image} /></div>
       <div className="order-details-title">{item.product.title}<p>{item.variants.title}</p></div>
-      <div className="order-details-quantity"><span>{item.quantity}</span></div>
+      {item.product.isDigital &&
+        <div className="text-center">
+          <a href={item.variants.digitalFileDownloadLink} download={item.variants.title}>
+            <Components.FlatButton
+              label="Download"
+              kind="flat"
+              status="primary"
+            />
+          </a>
+        </div>
+      }
+      {!item.product.isDigital &&
+        <div className="order-details-quantity"><span>{item.quantity}</span></div>
+      }
       <div className="order-details-price"><Components.Currency amount={item.variants.price} /></div>
     </div>
   );
